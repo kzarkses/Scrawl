@@ -1,0 +1,19 @@
+# Fichiers et dossiers spécifiques à Godot
+.godot/
+*.translation
+export_presets.cfg
+.import/
+export/
+logs/
+.mono/
+.godot/editor
+
+# Fichiers builds
+*.pck
+*.exe
+*.x86_64
+*.apk
+
+# Fichiers système
+.DS_Store
+Thumbs.db

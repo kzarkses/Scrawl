@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://cycd1vlr1k2sh"]
+
+[ext_resource type="Script" path="res://scripts/components/player.gd" id="1_vil3j"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6nakp"]
+radius = 0.49864
+height = 3.94875
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_vil3j")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-0.0157737, 0.0176202, -0.49944, 0.372534, 0.333494, 0, 0.333121, -0.372117, -0.0236491, 0.666358, 0.721086, -0.680456)
+height = 2.5
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-0.333266, 0.372738, -4.37114e-08, 0.372738, 0.333266, 0, 2.91351e-08, -3.25858e-08, -0.5, -0.666, 0.392, 0)
+height = 2.5
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="."]
+transform = Transform3D(0.455565, -0.206059, 0, 0.206059, 0.455565, 0, 0, 0, 0.5, 0.47799, -1.42865, 0)
+height = 2.5
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="."]
+transform = Transform3D(-0.455702, 0.205757, -4.37114e-08, 0.205757, 0.455702, 0, 3.98387e-08, -1.79879e-08, -0.5, -0.478, -1.429, 0)
+height = 2.5
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4604, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CSGSphere3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00395858, -0.395757)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0997819, 0)
+shape = SubResource("CapsuleShape3D_6nakp")
