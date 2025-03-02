@@ -1,6 +1,10 @@
 [gd_resource type="WwisePlatformInfo" load_steps=2 format=3 uid="uid://bymgex5mrdpoc"]
 
+<<<<<<< HEAD
 [sub_resource type="WwisePluginInfo" id="WwisePluginInfo_01v2r"]
+=======
+[sub_resource type="WwisePluginInfo" id="WwisePluginInfo_f4ruc"]
+>>>>>>> 8a5ac6c01b0c7d669e27df49ae06ae13644561a0
 plugin_name = "Motion"
 plugin_id = 33226759
 dll_name = "AkMotion"
@@ -9,4 +13,8 @@ static_lib_name = "AkMotionSink"
 [resource]
 platform_name = "Windows"
 platform_path = "Windows"
+<<<<<<< HEAD
 plugin_info = Array[WwisePluginInfo]([SubResource("WwisePluginInfo_01v2r")])
+=======
+plugin_info = Array[WwisePluginInfo]([SubResource("WwisePluginInfo_f4ruc")])
+>>>>>>> 8a5ac6c01b0c7d669e27df49ae06ae13644561a0
