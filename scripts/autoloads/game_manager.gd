@@ -1,30 +1,28 @@
 extends Node
 
-# Signaux pour le système de combat
+#region Public
+# Combat system signals
 signal player_hit(damage_amount: float)
 signal enemy_hit(enemy_id: int, damage_amount: float)
 
-# Variables globales du jeu
+# Global game variables
 var player_health: float = 100.0
 var player_max_health: float = 100.0
 var player_attack_power: float = 10.0
 var player_defense: float = 5.0
 
-# Constantes de physique
+# Physics constants
 const GRAVITY: float = 9.8
-const IMPACT_FORCE_MULTIPLIER: float = 2.0  # Pour les reculs lors des impacts
+const IMPACT_FORCE_MULTIPLIER: float = 2.0  # For knockback on impacts
+#endregion
 
-# Liste des ennemis actifs
-var active_enemies: Dictionary = {}
-
-# Système de score
-var score: int = 0
-var combo_multiplier: int = 1
-
+#region Godot API
 func _ready() -> void:
-	# Initialiser tout ce dont vous avez besoin au démarrage
-	print("Gestionnaire de jeu initialisé")
+	# Initialize everything needed at startup
+	print("Game Manager initialized")
+#endregion
 
+#region Main API
 func get_gravity() -> Vector3:
 	return Vector3(0, -GRAVITY, 0)
 
@@ -37,45 +35,55 @@ func damage_player(amount: float) -> void:
 		game_over()
 
 func damage_enemy(enemy_id: int, amount: float) -> void:
-	if enemy_id in active_enemies:
-		# Récupère l'ennemi et lui applique des dégâts
-		var enemy = active_enemies[enemy_id]
+	if enemy_id in _active_enemies:
+		# Get enemy and apply damage
+		var enemy = _active_enemies[enemy_id]
 		var actual_damage = max(1, amount)
 		
-		# Déclencher le signal pour que l'ennemi puisse réagir
+		# Trigger signal so enemy can react
 		emit_signal("enemy_hit", enemy_id, actual_damage)
 		
-		# Augmenter le combo
+		# Increase combo
 		increase_combo()
 
 func register_enemy(enemy_node: Node, enemy_id: int) -> void:
-	active_enemies[enemy_id] = enemy_node
+	_active_enemies[enemy_id] = enemy_node
 
 func unregister_enemy(enemy_id: int) -> void:
-	if enemy_id in active_enemies:
-		active_enemies.erase(enemy_id)
+	if enemy_id in _active_enemies:
+		_active_enemies.erase(enemy_id)
 
 func increase_combo() -> void:
-	combo_multiplier += 1
-	score += 10 * combo_multiplier
+	_combo_multiplier += 1
+	_score += 10 * _combo_multiplier
 	
-	# Réinitialiser le combo après un certain temps
+	# Reset combo after a certain time
 	reset_combo_after_delay(3.0)
 
 func reset_combo_after_delay(delay: float) -> void:
 	await get_tree().create_timer(delay).timeout
-	combo_multiplier = 1
+	_combo_multiplier = 1
 
 func game_over() -> void:
 	print("Game Over!")
-	# Implémenter la logique de fin de jeu ici
+	# Implement game over logic here
 	
 func restart_game() -> void:
-	# Réinitialiser les valeurs
+	# Reset values
 	player_health = player_max_health
-	score = 0
-	combo_multiplier = 1
-	active_enemies.clear()
+	_score = 0
+	_combo_multiplier = 1
+	_active_enemies.clear()
 	
-	# Redémarrer la scène ou charger le niveau initial
+	# Restart scene or load initial level
 	# get_tree().reload_current_scene()
+#endregion
+
+#region Private
+# List of active enemies
+var _active_enemies: Dictionary = {}
+
+# Score system
+var _score: int = 0
+var _combo_multiplier: int = 1
+#endregion

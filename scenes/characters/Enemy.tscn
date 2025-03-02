@@ -1,18 +1,98 @@
-[gd_scene load_steps=3 format=3 uid="uid://btyou3esv1jf1"]
+[gd_scene load_steps=11 format=3 uid="uid://btyou3esv1jf1"]
 
 [ext_resource type="Script" path="res://scripts/components/enemy.gd" id="1_4ny1d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f78lo"]
+albedo_color = Color(0.921569, 0.341176, 0.270588, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_djytv"]
 radius = 0.49864
 height = 3.94875
 
-[node name="Enemy" type="CharacterBody3D"]
+[sub_resource type="Animation" id="Animation_rp8ut"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGSphere3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_67t3u"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCylinder3D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.523599), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_e14sk"]
+resource_name = "die"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1, 0.1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jdhfu"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGSphere3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.9, 0.9, 0.9), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1yqok"]
+_data = {
+"RESET": SubResource("Animation_rp8ut"),
+"attack": SubResource("Animation_67t3u"),
+"die": SubResource("Animation_e14sk"),
+"hit": SubResource("Animation_jdhfu")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a32xj"]
+radius = 1.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h7lqf"]
+radius = 10.0
+
+[node name="Enemy" type="CharacterBody3D" groups=["enemies"]]
 script = ExtResource("1_4ny1d")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
+material_override = SubResource("StandardMaterial3D_f78lo")
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
-transform = Transform3D(-0.0157737, 0.0176202, -0.49944, 0.372534, 0.333494, 0, 0.333121, -0.372117, -0.0236491, 0.666358, 0.721086, -0.680456)
+transform = Transform3D(-0.0157737, 0.0176202, -0.49944, 0.372534, 0.333494, -7.08442e-09, 0.333121, -0.372117, -0.0236491, 0.666358, 0.721086, -0.680456)
 height = 2.5
 
 [node name="CSGCylinder3D5" type="CSGCylinder3D" parent="."]
@@ -33,3 +113,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4604, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0997819, 0)
 shape = SubResource("CapsuleShape3D_djytv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1yqok")
+}
+
+[node name="AttackArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
+shape = SubResource("SphereShape3D_a32xj")
+
+[node name="DetectionArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionArea"]
+shape = SubResource("SphereShape3D_h7lqf")
+
+[node name="Ragdoll" type="Node3D" parent="."]
