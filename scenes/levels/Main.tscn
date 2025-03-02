@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://im7j2glslqm4"]
+[gd_scene load_steps=7 format=3 uid="uid://im7j2glslqm4"]
 
 [ext_resource type="PackedScene" uid="uid://cycd1vlr1k2sh" path="res://scenes/characters/Player.tscn" id="1_lk4jo"]
+[ext_resource type="PackedScene" uid="uid://btyou3esv1jf1" path="res://scenes/characters/Enemy.tscn" id="2_28wxw"]
+[ext_resource type="PackedScene" uid="uid://bnbv6yc1axt6v" path="res://scenes/audio/AudioSystem.tscn" id="3_8uepl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hpt0t"]
 
@@ -16,6 +18,10 @@ sky = SubResource("Sky_2n8tv")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_yt7kw")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 10, 0)
+shadow_enabled = true
+
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 use_collision = true
@@ -24,5 +30,7 @@ size = Vector3(50, 1, 50)
 [node name="Player" parent="." instance=ExtResource("1_lk4jo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.309285, 2.45653, -0.979807)
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.2127, 0, 0)
+[node name="Enemy" parent="." instance=ExtResource("2_28wxw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3959, 3.85735, -13.4745)
+
+[node name="AudioSystem" parent="." instance=ExtResource("3_8uepl")]

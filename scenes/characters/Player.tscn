@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cycd1vlr1k2sh"]
+[gd_scene load_steps=8 format=3 uid="uid://cycd1vlr1k2sh"]
 
 [ext_resource type="Script" path="res://scripts/components/player.gd" id="1_vil3j"]
 
@@ -6,13 +6,69 @@
 radius = 0.49864
 height = 3.94875
 
-[node name="Player" type="CharacterBody3D"]
+[sub_resource type="Animation" id="Animation_8npne"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCylinder3D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.41689e-08, -1.61811, 0.840637)]
+}
+
+[sub_resource type="Animation" id="Animation_cqqtq"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCylinder3D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.41689e-08, -1.61811, 0.840637), Vector3(0, -1.41895, 2.03854)]
+}
+
+[sub_resource type="Animation" id="Animation_hdjq5"]
+resource_name = "take_hit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGSphere3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.9, 0.9, 0.9), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pyrd1"]
+_data = {
+"RESET": SubResource("Animation_8npne"),
+"attack": SubResource("Animation_cqqtq"),
+"take_hit": SubResource("Animation_hdjq5")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mfbwj"]
+radius = 2.0
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_vil3j")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
-transform = Transform3D(-0.0157737, 0.0176202, -0.49944, 0.372534, 0.333494, 0, 0.333121, -0.372117, -0.0236491, 0.666358, 0.721086, -0.680456)
+transform = Transform3D(-0.0157729, 0.0176193, -0.49944, 0.372534, 0.333494, -7.08444e-09, 0.333121, -0.372117, -0.023648, 0.446533, 0.932446, -0.5535)
 height = 2.5
 
 [node name="CSGCylinder3D5" type="CSGCylinder3D" parent="."]
@@ -30,9 +86,30 @@ height = 2.5
 [node name="CSGSphere3D" type="CSGSphere3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4604, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CSGSphere3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00395858, -0.395757)
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0997819, 0)
 shape = SubResource("CapsuleShape3D_6nakp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pyrd1")
+}
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="AkListener3D" type="AkListener3D" parent="CameraPivot/Camera3D"]
+
+[node name="WeaponPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.9, -0.5)
+
+[node name="AttackArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea"]
+shape = SubResource("SphereShape3D_mfbwj")
+
+[node name="AkGameObj" type="AkGameObj" parent="."]

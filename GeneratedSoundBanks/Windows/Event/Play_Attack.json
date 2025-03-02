@@ -1,0 +1,48 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1519321238",
+    "Type": "Event",
+    "GUID": "{A3E17C2A-4163-4DA9-B717-9A0043D57C55}",
+    "Language": "SFX",
+    "Hash": "{035A7F30-A6B1-926E-28CE-B863334B00A6}",
+    "ObjectPath": "Play_Attack",
+    "ShortName": "Play_Attack",
+    "Path": "Event/Play_Attack.bnk",
+    "Media": [
+     {
+      "Id": "1053691159",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Loose",
+      "ShortName": "Soundly Audio\\Swinging Staff Whoosh (Low) 06 by Nightflame Id-422500.wav",
+      "Path": "Media/1053691159.wem",
+      "CachePath": "ED/{ED1828FC-93BA-A944-0882-857E3234C6A2}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1519321238",
+      "Name": "Play_Attack",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Attack",
+      "GUID": "{A3E17C2A-4163-4DA9-B717-9A0043D57C55}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.28800455",
+      "DurationMax": "0.28800455",
+      "MediaRefs": [
+       {
+        "Id": "1053691159"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{581C1D8B-E162-C9C8-A2C1-C3F51EEE6434}"
+ }
+}

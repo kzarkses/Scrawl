@@ -1,0 +1,12 @@
+[gd_resource type="WwisePlatformInfo" load_steps=2 format=3 uid="uid://bymgex5mrdpoc"]
+
+[sub_resource type="WwisePluginInfo" id="WwisePluginInfo_01v2r"]
+plugin_name = "Motion"
+plugin_id = 33226759
+dll_name = "AkMotion"
+static_lib_name = "AkMotionSink"
+
+[resource]
+platform_name = "Windows"
+platform_path = "Windows"
+plugin_info = Array[WwisePluginInfo]([SubResource("WwisePluginInfo_01v2r")])
