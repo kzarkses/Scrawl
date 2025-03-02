@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bnbv6yc1axt6v"]
+
+[node name="AudioSystem" type="Node"]
+
+[node name="MainBank" type="AkBank" parent="."]
+bank = "Main"
+load_on = 1
+unload_on = 3
+
+[node name="SFXBank" type="AkBank" parent="."]
+bank = "SFX"
+load_on = 1
+unload_on = 3
+
+[node name="MusicBank" type="AkBank" parent="."]
+bank = "Music"
+load_on = 1
+unload_on = 3
+
+[node name="MusicController" type="Node" parent="."]
+
+[node name="MusicEvent" type="AkEvent3D" parent="MusicController"]
+event = "Play_Music"
+trigger_on = 1
+
+[node name="MusicState" type="AkState" parent="MusicController"]
+state = "MusicState:Exploration"
+trigger_on = 1
+
+[node name="CombatState" type="AkState" parent="MusicController"]
+state = "MusicState:Combat"
+trigger_on = 0
+
+[node name="AmbientSounds" type="Node" parent="."]
+
+[node name="AmbientEvent" type="AkEvent3D" parent="AmbientSounds"]
+event = "Play_Ambient"
+trigger_on = 1

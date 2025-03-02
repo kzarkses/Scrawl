@@ -1,0 +1,3 @@
+Event	ID	Name			Wwise Object Path	Notes
+	1519321238	Play_Attack			\Default Work Unit\Play_Attack	
+

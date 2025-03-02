@@ -9,12 +9,11 @@ extends CharacterBody3D
 @export var m_mouse_sensitivity: float = 0.002
 #endregion
 
+
 #region Godot API
 func _ready() -> void:
-	# Connect to game manager
 	GameManager.player_hit.connect(_on_player_hit)
 	
-	# Capture mouse
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _input(event: InputEvent) -> void:
@@ -43,10 +42,8 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = m_jump_velocity
 
-	# Get input direction for strafing
 	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	
-	# Create direction vector based on player orientation
 	var direction = Vector3.ZERO
 	var forward = global_transform.basis.z
 	forward.y = 0
@@ -66,49 +63,43 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, m_speed)
 		velocity.z = move_toward(velocity.z, 0, m_speed)
 
-	# Handle attack
 	if Input.is_action_just_pressed("attack") and _can_attack:
 		attack()
 
 	move_and_slide()
 #endregion
 
+
 #region Main API
 func attack() -> void:
 	_can_attack = false
 	_is_attacking = true
 	
-	# Play attack animation
 	if _animation_player.has_animation("attack"):
 		_animation_player.play("attack")
 	
-	# Play attack sound
 	if AudioManager.has_method("play_attack_swing"):
 		AudioManager.play_attack_swing(global_position)
 	
-	# Check enemies in attack area
 	var enemies_in_range = _get_enemies_in_attack_range()
 	for enemy in enemies_in_range:
 		if enemy.has_method("take_damage"):
-			# Apply damage to enemy
 			enemy.take_damage(GameManager.player_attack_power)
 			
-			# Apply knockback force to enemy
 			var knockback_direction = (enemy.global_position - global_position).normalized()
-			knockback_direction.y = 0.5  # Add small vertical component to knockback
+			knockback_direction.y = 0.5
 			
 			if enemy.has_method("apply_knockback"):
 				enemy.apply_knockback(knockback_direction * 10.0)
 	
-	# Reset state after delay
 	await get_tree().create_timer(m_attack_cooldown).timeout
 	_is_attacking = false
 	_can_attack = true
 
 func apply_knockback(direction: Vector3, force: float = 5.0) -> void:
-	# Reduce force based on knockback resistance
 	_knockback_vector = direction * force * (1.0 - _knockback_resistance)
 #endregion
+
 
 #region Private
 # Child nodes

@@ -131,3 +131,5 @@ shape = SubResource("SphereShape3D_a32xj")
 shape = SubResource("SphereShape3D_h7lqf")
 
 [node name="Ragdoll" type="Node3D" parent="."]
+
+[node name="HitSound" type="AkEvent3D" parent="."]
