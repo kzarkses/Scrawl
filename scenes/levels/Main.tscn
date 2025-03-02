@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://im7j2glslqm4"]
+[gd_scene load_steps=6 format=3 uid="uid://im7j2glslqm4"]
 
 [ext_resource type="PackedScene" uid="uid://cycd1vlr1k2sh" path="res://scenes/characters/Player.tscn" id="1_lk4jo"]
+[ext_resource type="PackedScene" uid="uid://btyou3esv1jf1" path="res://scenes/characters/Enemy.tscn" id="2_28wxw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hpt0t"]
 
@@ -26,3 +27,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.309285, 2.45653, -0.979807)
 
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.2127, 0, 0)
+
+[node name="Enemy" parent="." instance=ExtResource("2_28wxw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3959, 3.85735, -13.4745)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cycd1vlr1k2sh"]
+[gd_scene load_steps=6 format=3 uid="uid://cycd1vlr1k2sh"]
 
 [ext_resource type="Script" path="res://scripts/components/player.gd" id="1_vil3j"]
 
@@ -6,13 +6,49 @@
 radius = 0.49864
 height = 3.94875
 
+[sub_resource type="Animation" id="Animation_8npne"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCylinder3D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.41689e-08, -1.61811, 0.840637)]
+}
+
+[sub_resource type="Animation" id="Animation_cqqtq"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGCylinder3D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.41689e-08, -1.61811, 0.840637), Vector3(0, -1.41895, 2.03854)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pyrd1"]
+_data = {
+"RESET": SubResource("Animation_8npne"),
+"attack": SubResource("Animation_cqqtq")
+}
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_vil3j")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="."]
-transform = Transform3D(-0.0157737, 0.0176202, -0.49944, 0.372534, 0.333494, 0, 0.333121, -0.372117, -0.0236491, 0.666358, 0.721086, -0.680456)
+transform = Transform3D(-0.0157729, 0.0176193, -0.49944, 0.372534, 0.333494, -7.08444e-09, 0.333121, -0.372117, -0.023648, 0.446533, 0.932446, -0.5535)
 height = 2.5
 
 [node name="CSGCylinder3D5" type="CSGCylinder3D" parent="."]
@@ -36,3 +72,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00395858, -0.395757)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0997819, 0)
 shape = SubResource("CapsuleShape3D_6nakp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pyrd1")
+}
